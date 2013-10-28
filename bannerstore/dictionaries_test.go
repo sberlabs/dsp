@@ -3,7 +3,7 @@ package bannerstore_test
 import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	. "rtbc/bannerstore"
+	. "dsp/bannerstore"
 )
 
 var _ = Describe("Dictionaries", func() {
