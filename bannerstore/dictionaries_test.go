@@ -19,7 +19,7 @@ var _ = Describe("Dictionaries", func() {
 			"EADCA566-A8BF-403A-950A-0B82B526D2D1")
 	})
 
-	Describe("loading GeoInfo from Yandex RTB banner store", func() {
+	FDescribe("loading GeoInfo from Yandex RTB banner store", func() {
 		Context("when GeoInfo loads successfully", func() {
 			It("should populate array of GeoInfo correctly", func() {
 				info := store.GetGeo()

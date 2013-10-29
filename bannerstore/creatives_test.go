@@ -43,7 +43,7 @@ var _ = Describe("Creatives", func() {
                 })
         })
 
-        FDescribe("Getting Creative by tag from Yandex RTB banner store", func() {
+        Describe("Getting Creative by tag from Yandex RTB banner store", func() {
                 Context("when passed correct parameters", func() {
                         It("should return correct CreativeInfo", func() {
                                 info := store.GetCreativeByTag("main")

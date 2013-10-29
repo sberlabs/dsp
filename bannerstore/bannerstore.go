@@ -1,7 +1,6 @@
 package bannerstore
 
 import (
-        //"fmt"
         "github.com/kolo/xmlrpc"
         "mapstructure"
         "reflect"
@@ -98,46 +97,46 @@ func (store *BannerStore) makeRequestFunc(req string, fptr interface{}) {
 
                 switch req {
 
-                // Dictionary methods, logonId is not required
+                // Dictionaries
                 case "GetGeo":
                         var retval []GeoInfo
-                        store.client.Call(req, nil, &res)
+                        store.client.Call("BannerStore."+req, nil, &res)
                         decode(res, &retval)
                         return []reflect.Value{reflect.ValueOf(retval)}
 
                 case "GetMacros":
                         var retval []MacrosInfo
-                        store.client.Call(req, nil, &res)
+                        store.client.Call("BannerStore."+req, nil, &res)
                         decode(res, &retval)
                         return []reflect.Value{reflect.ValueOf(retval)}
 
                 case "GetSite":
                         var retval []SiteInfo
-                        store.client.Call(req, nil, &res)
+                        store.client.Call("BannerStore."+req, nil, &res)
                         decode(res, &retval)
                         return []reflect.Value{reflect.ValueOf(retval)}
 
                 case "GetTemplate":
                         var retval []TemplateInfo
-                        store.client.Call(req, nil, &res)
+                        store.client.Call("BannerStore."+req, nil, &res)
                         decode(res, &retval)
                         return []reflect.Value{reflect.ValueOf(retval)}
 
                 case "GetTnsAdvertiser":
                         var retval []TnsAdvertiserInfo
-                        store.client.Call(req, nil, &res)
+                        store.client.Call("BannerStore."+req, nil, &res)
                         decode(res, &retval)
                         return []reflect.Value{reflect.ValueOf(retval)}
 
                 case "GetTnsArticle":
                         var retval []TnsArticleInfo
-                        store.client.Call(req, nil, &res)
+                        store.client.Call("BannerStore."+req, nil, &res)
                         decode(res, &retval)
                         return []reflect.Value{reflect.ValueOf(retval)}
 
                 case "GetTnsBrand":
                         var retval []TnsBrandInfo
-                        store.client.Call(req, nil, &res)
+                        store.client.Call("BannerStore."+req, nil, &res)
                         decode(res, &retval)
                         return []reflect.Value{reflect.ValueOf(retval)}
 
@@ -147,67 +146,52 @@ func (store *BannerStore) makeRequestFunc(req string, fptr interface{}) {
                         p := make([]interface{}, 2, 2)
                         p = append(p, store.CreateLogon())
                         p = append(p, params[0].Interface())
-                        store.client.Call(req, p, &r)
+                        store.client.Call("BannerStore."+req, p, &r)
                         return []reflect.Value{reflect.ValueOf(r)}
 
                 case "GetCreativeByNmb":
-                        var (
-                                m       []interface{}
-                                retval  CreativeInfo
-                        )
+                        var retval CreativeInfo
                         p := make([]interface{}, 2, 2)
                         p = append(p, store.CreateLogon())
                         p = append(p, params[0].Interface())
-                        store.client.Call(req, p, &m)
-                        mapstructure.Decode(m, &retval)
+                        store.client.Call("BannerStore."+req, p, &res)
+                        mapstructure.Decode(res, &retval)
                         return []reflect.Value{reflect.ValueOf(&retval)}
 
                 case "GetCreativeByTag":
-                        var (
-                                m       []interface{}
-                                retval  []CreativeInfo
-                        )
+                        var retval []CreativeInfo
                         p := make([]interface{}, 2, 2)
                         p = append(p, store.CreateLogon())
                         p = append(p, params[0].Interface())
-                        store.client.Call(req, p, &m)
-                        decode(m, &retval)
+                        store.client.Call("BannerStore."+req, p, &res)
+                        decode(res, &retval)
                         return []reflect.Value{reflect.ValueOf(retval)}
 
                 case "GetCreativeMacros":
-                        var (
-                                m       []interface{}
-                                retval  []CreativeMacrosInfo
-                        )
+                        var retval []CreativeMacrosInfo
                         p := make([]interface{}, 2, 2)
                         p = append(p, store.CreateLogon())
                         p = append(p, params[0].Interface())
-                        store.client.Call(req, p, &m)
-                        decode(m, &retval)
+                        store.client.Call("BannerStore."+req, p, &res)
+                        decode(res, &retval)
                         return []reflect.Value{reflect.ValueOf(retval)}
 
                 case "GetCreativeTnsArticle":
-                        var (
-                                m       []interface{}
-                                retval  []TnsArticleInfo
-                        )
+                        var retval []TnsArticleInfo
                         p := make([]interface{}, 2, 2)
                         p = append(p, store.CreateLogon())
                         p = append(p, params[0].Interface())
-                        store.client.Call(req, p, &m)
-                        decode(m, &retval)
+                        store.client.Call("BannerStore."+req, p, &res)
+                        decode(res, &retval)
                         return []reflect.Value{reflect.ValueOf(retval)}
 
                 case "GetCreativeTnsBrand":
-                        var (
-                                m       []interface{}
-                                retval  []TnsBrandInfo
-                        )
+                        var retval []TnsBrandInfo
                         p := make([]interface{}, 2, 2)
                         p = append(p, store.CreateLogon())
                         p = append(p, params[0].Interface())
-                        store.client.Call(req, p, &m)
-                        decode(m, &retval)
+                        store.client.Call("BannerStore."+req, p, &res)
+                        decode(res, &retval)
                         return []reflect.Value{reflect.ValueOf(retval)}
 
                 case "UpdateCreative",
@@ -220,36 +204,29 @@ func (store *BannerStore) makeRequestFunc(req string, fptr interface{}) {
                         "UpdateCreativeTnsBrand",
                         "RequestCreativeEdit",
                         "RequestCreativeModeration":
-                        var m []interface{}
-
                         p := make([]interface{}, 2, 2)
                         p = append(p, store.CreateLogon())
                         p = append(p, params[0].Interface())
-                        store.client.Call(req, p, &m)
+                        store.client.Call("BannerStore."+req, p, &res)
                         return nil
 
+                // Files
                 case "GetFileByNmb":
-                        var (
-                                m       []interface{}
-                                retval  FileInfo
-                        )
+                        var retval FileInfo
                         p := make([]interface{}, 2, 2)
                         p = append(p, store.CreateLogon())
                         p = append(p, params[0].Interface())
-                        store.client.Call(req, p, &m)
-                        mapstructure.Decode(m, &retval)
+                        store.client.Call("BannerStore."+req, p, &res)
+                        mapstructure.Decode(res, &retval)
                         return []reflect.Value{reflect.ValueOf(&retval)}
 
                 case "GetFileByTag":
-                        var (
-                                m       []interface{}
-                                retval  []FileInfo
-                        )
+                        var retval []FileInfo
                         p := make([]interface{}, 2, 2)
                         p = append(p, store.CreateLogon())
                         p = append(p, params[0].Interface())
-                        store.client.Call(req, p, &m)
-                        decode(m, &retval)
+                        store.client.Call("BannerStore."+req, p, &res)
+                        decode(res, &retval)
                         return []reflect.Value{reflect.ValueOf(retval)}
 
                 case "UploadFile":
@@ -257,7 +234,7 @@ func (store *BannerStore) makeRequestFunc(req string, fptr interface{}) {
                         p := make([]interface{}, 2, 2)
                         p = append(p, store.CreateLogon())
                         p = append(p, params[0].Interface())
-                        store.client.Call(req, p, &r)
+                        store.client.Call("BannerStore."+req, p, &r)
                         return []reflect.Value{reflect.ValueOf(r)}
 
                 default:
